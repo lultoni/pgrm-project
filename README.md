@@ -1,3 +1,5 @@
+To generate example data for the tables use the class z_gen_flights
+
 Task 1:
 - z_flight_info
 
