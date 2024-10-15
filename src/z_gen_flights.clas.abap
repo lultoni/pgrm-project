@@ -22,6 +22,10 @@ CLASS z_gen_flights IMPLEMENTATION.
     ls_flight-carrid = 'LH'.
     ls_flight-connection_id = '001'.
     ls_flight-fldate = '20231015'.
+    ls_flight-dep_airport = 'MUC'.
+    ls_flight-arr_airport = 'TXL'.
+    ls_flight-flight_price = 100.
+    ls_flight-currency_code = 'EUR'.
     INSERT INTO z05_flight VALUES @ls_flight.
 
     CLEAR ls_miles.
@@ -34,6 +38,10 @@ CLASS z_gen_flights IMPLEMENTATION.
     ls_flight-carrid = 'LH'.
     ls_flight-connection_id = '002'.
     ls_flight-fldate = '20231016'.
+    ls_flight-dep_airport = 'FRA'.
+    ls_flight-arr_airport = 'TXL'.
+    ls_flight-flight_price = 150.
+    ls_flight-currency_code = 'EUR'.
     INSERT INTO z05_flight VALUES @ls_flight.
 
     CLEAR ls_miles.
