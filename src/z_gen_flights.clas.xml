@@ -3,9 +3,9 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>Z_FLIGHT_INFO_2</CLSNAME>
+    <CLSNAME>Z_GEN_FLIGHTS</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>cancer</DESCRIPT>
+    <DESCRIPT>Generating Test Flights</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
