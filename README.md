@@ -2,10 +2,10 @@ Task 1:
 - z_flight_info
 
 Task 2:
-- N.A.
+- z_flight_miles_sync
 
 Task 3:
-- N.A.
+- z_last_minute_offers
 
 Task 4:
 - N.A.
