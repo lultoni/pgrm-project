@@ -25,7 +25,9 @@ CLASS z_flight_info IMPLEMENTATION.
     IF sy-subrc = 0.
       LOOP AT lt_flights INTO ls_flight.
         CONCATENATE 'Flight: ' ls_flight-carrid
-                    ' Date: ' ls_flight-fldate
+                    ' | Date: ' ls_flight-fldate
+                    ' | From: ' ls_flight-dep_airport
+                    ' | To: ' ls_flight-arr_airport
                     INTO lv_flight_info SEPARATED BY space.
         out->write( lv_flight_info ).
       ENDLOOP.
