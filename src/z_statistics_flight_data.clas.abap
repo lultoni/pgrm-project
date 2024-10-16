@@ -28,6 +28,7 @@ CLASS z_statistics_flight_data IMPLEMENTATION.
           lv_departures_count TYPE i,
           lv_landings_count  TYPE i.
 
+    " This part fetches all the correct airport codes from which the programm will compare the existing flights with
     lv_search_criteria = 'CNT'.  " Example: Values can be 'CTY', 'CNT', 'CAP'
 
     CASE lv_search_criteria.
@@ -54,10 +55,11 @@ CLASS z_statistics_flight_data IMPLEMENTATION.
         RETURN.
     ENDCASE.
 
+    " Sorts the airport codes and deletes any duplicates that might have found their way inside
     SORT lt_ref_airports BY airport_code.
     DELETE ADJACENT DUPLICATES FROM lt_ref_airports COMPARING airport_code.
 
-    " Fetch all flights that match the dep/arr airports
+    " Fetch all flights that match the departure or arrival airports
     LOOP AT lt_ref_airports INTO ls_ref_airport.
       SELECT * FROM z05_flight
         WHERE dep_airport = @ls_ref_airport-airport_code OR arr_airport = @ls_ref_airport-airport_code
@@ -67,18 +69,21 @@ CLASS z_statistics_flight_data IMPLEMENTATION.
       APPEND LINES OF lt_flights TO lt_all_flights.
     ENDLOOP.
 
+    " Again remove dupes that are inside the flights that are to be counted
     SORT lt_all_flights BY carrid connection_id fldate.
     DELETE ADJACENT DUPLICATES FROM lt_all_flights COMPARING carrid connection_id fldate dep_airport arr_airport.
 
     LOOP AT lt_ref_airports INTO ls_ref_airport.
       CLEAR: lv_departures_count, lv_landings_count.
 
+      " Count the amount of times the current airport is a arrival or departure destination
       lv_departures_count = REDUCE i( INIT x = 0 FOR flight IN lt_all_flights WHERE ( dep_airport = ls_ref_airport-airport_code ) NEXT x = x + 1 ).
       lv_landings_count   = REDUCE i( INIT x = 0 FOR flight IN lt_all_flights WHERE ( arr_airport = ls_ref_airport-airport_code ) NEXT x = x + 1 ).
 
       lv_departures = lv_departures_count.
       lv_landings   = lv_landings_count.
 
+      " Adds the strings to the output table for later printing
       CONCATENATE 'Departures from:  ' ls_ref_airport-airport_code ' (' ls_ref_airport-city ', ' ls_ref_airport-country '): ' lv_departures INTO lv_result.
       APPEND lv_result TO lt_result.
 
@@ -87,6 +92,7 @@ CLASS z_statistics_flight_data IMPLEMENTATION.
 
     ENDLOOP.
 
+    " Loop through the output table and print all the results
     LOOP AT lt_result INTO lv_result.
       out->write( lv_result ).
     ENDLOOP.
