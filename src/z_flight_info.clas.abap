@@ -16,7 +16,6 @@ CLASS z_flight_info IMPLEMENTATION.
           ls_flight TYPE z05_flight,
           lv_flight_info TYPE string.
 
-    " Flugnummer hart codiert (z.B., LH für Lufthansa Flug)
     SELECT *
       FROM z05_flight
       WHERE carrid = 'LH'
